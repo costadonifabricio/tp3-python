@@ -1,7 +1,7 @@
 import pandas as pd
 
 def analisis_estadistico(valores):
-
+    
     # Crear un DataFrame a partir de la lista de valores
     df = pd.DataFrame(valores, columns=["fi"])
     
@@ -9,7 +9,7 @@ def analisis_estadistico(valores):
     df["Fi"] = df["fi"].cumsum()
     
     # Calcular fri (frecuencia relativa)
-    df["fri"] = (df["fi"] / df["fi"].sum())
+    df["fri"] = df["fi"] / df["fi"].sum()
     
     # Calcular Fri (frecuencia relativa acumulada)
     df["Fri"] = df["fri"].cumsum()
@@ -20,21 +20,14 @@ def analisis_estadistico(valores):
     # Calcular Pi% (probabilidad acumulada)
     df["Pi%"] = df["Fri"] * 100
     
-    # Almacenar los resultados en un diccionario
-    results = {
-        "fi": df["fi"],
-        "Fi": df["Fi"],
-        "fri": df["fri"],
-        "Fri": df["Fri"],
-        "pi%": df["pi%"],
-        "Pi%": df["Pi%"],
-    }
-    return results
+    return df
 
-# Caso de Prueba con el fi de edades del excel cargados manuealmente
-valores_ejemplo = [1, 9, 4, 3, 4, 1, 0, 1, 0, 0
-                    , 2, 2, 1, 0, 0, 0, 2]
-results = analisis_estadistico(valores_ejemplo)
+# Importar el archivo CSV
+df_alumnos = pd.read_csv("alumnos.csv")
+
+# Obtener los valores de la columna "fi" del DataFrame
+valores_alumnos = df_alumnos["fi"].tolist()
+
+# Llamar a la función analisis_estadistico con los valores de alumnos
+results = analisis_estadistico(valores_alumnos)
 print(results)
-
-
